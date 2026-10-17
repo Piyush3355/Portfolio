@@ -23,14 +23,19 @@ test('damping converges without overshooting and respects elapsed time', () => {
   assert.ok(Math.abs(twoFrames - damp(0, 1, .1)) < 1e-10);
 });
 
-test('all project filters map to real repository content', () => {
+test('project filters map to resume case studies and public automation work', () => {
   assert.equal(projectCount('all'), 3);
-  for (const filter of ['quality', 'data', 'web']) assert.equal(projectCount(filter), 1);
+  for (const filter of ['quality', 'saas', 'automation']) assert.equal(projectCount(filter), 1);
   assert.equal(projectCount('unknown'), 0);
   for (const project of Object.values(projects)) {
     const url = new URL(project.url);
-    assert.equal(url.hostname, 'github.com');
-    assert.ok(url.pathname.startsWith('/Piyush3355/'));
+    if (project.filter === 'automation') {
+      assert.equal(url.hostname, 'github.com');
+      assert.ok(url.pathname.startsWith('/Piyush3355/'));
+    } else {
+      assert.equal(url.protocol, 'mailto:');
+      assert.equal(url.pathname, 'piyushpatil.da@gmail.com');
+    }
     assert.ok(project.title && project.description && project.detail && project.tags.length);
   }
 });
@@ -55,7 +60,7 @@ test('external links are isolated and no placeholder links are shipped', () => {
 
 test('the static page retains navigation and contact without JavaScript', () => {
   assert.match(html, /class="skip-link"/);
-  assert.match(html, /href="mailto:ppatil33555@gmail.com"/);
+  assert.match(html, /href="mailto:piyushpatil.da@gmail.com"/);
   assert.match(html, /<noscript>/);
   assert.match(html, /<html lang="en">/);
   assert.match(html, /aria-labelledby="dialog-title"/);

@@ -1,6 +1,6 @@
 # Piyush Patil — Portfolio
 
-A responsive portfolio built with HTML, CSS, JavaScript, and Three.js. An interactive chrome sculpture, scroll-led process section, and editorial typography connect quality engineering, data analysis, and web projects.
+A responsive Software QA Engineer portfolio built with HTML, CSS, JavaScript, and Three.js. An interactive chrome sculpture, scroll-led process section, and editorial typography present Piyush Patil's API, automation, and AI testing experience.
 
 ## Development
 
@@ -31,7 +31,7 @@ Deploy the generated `dist/` directory to a static host. No API keys or backend 
 - `motion.js`: bounded scroll progress and frame-rate-independent damping.
 - `style.css`: responsive layouts and reduced-motion styling.
 
-Project content is based on the owner's GitHub repositories. The artwork is illustrative, not project screenshots or test results. Employment, education, certifications, and resume downloads must be added only after a readable resume is supplied; the provided PDF was corrupted and is intentionally not included.
+Professional content is based on the resume text supplied by the owner: Sattvabit, CodeLamda Technologies, Elefant.ai, Inbuildify, and North Maharashtra University. The automation practice card links to the owner's public Python/Playwright repository. Client project actions open an email conversation rather than implying that private source code is public. Artwork is illustrative, not project screenshots or live test results. A downloadable resume is generated from the supplied text; LinkedIn is omitted because no profile URL was provided.
 
 ## Accessibility & performance
 
@@ -39,4 +39,4 @@ Native project dialogs support Escape and return focus to their trigger. Filters
 
 ## Verification
 
-Node's built-in tests cover project mappings, links, markup invariants, and scroll math. ESLint checks JavaScript, TypeScript checks the typed JavaScript modules, and Vite produces the deployment build. Browser/device verification is a separate end-to-end check.
+Node's built-in tests cover project mappings, links, markup invariants, and scroll math. ESLint checks JavaScript, TypeScript checks the typed JavaScript modules, and Vite produces the deployment build. Earlier design checks predate the resume integration. Further testing was cancelled at the owner's request; the owner will test the final content through the running preview.

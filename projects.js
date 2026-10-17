@@ -1,31 +1,34 @@
-/** Verified against the owner's repositories, not employment or resume claims. */
+/** Professional details come from Piyush's supplied resume; automation links to his repository. */
 export const projects = {
-  checkout: {
-    category: '01 / QUALITY ENGINEERING',
-    title: 'Checkout, without surprises.',
-    description: 'An exploration of checkout and pincode testing for Riotoys.',
-    detail: 'A Python testing project focused on the checkout pincode flow. The repository contains the test script so you can inspect the implementation directly. Related automation explorations include Playwright, Pytest, fixtures, assertions, and page object models.',
-    tags: ['Python', 'Checkout testing', 'Pincode validation'],
-    url: 'https://github.com/Piyush3355/Riotoys-checkout-pincode-test',
+  elefant: {
+    category: '01 / E-COMMERCE & LOGISTICS',
+    title: 'Elefant.ai — every flow matters.',
+    description: 'End-to-end manual and exploratory testing across the Admin, Adloggs, and Rider apps, covering mobile, web, and API workflows.',
+    detail: 'Validated checkout flows, address management, and dynamic catalog filtering within Agile sprints. Used Postman to validate order-sync endpoints and documented 30+ reproducible defects in Plane.so with structured severity and priority classifications ahead of sprint releases.',
+    tags: ['Manual & exploratory', 'E2E', 'Postman', 'Plane.so', 'Mobile & web'],
+    url: 'mailto:piyushpatil.da@gmail.com?subject=Elefant.ai%20QA%20case%20study',
+    linkLabel: 'Discuss this project',
     filter: 'quality',
   },
-  retail: {
-    category: '02 / DATA & INSIGHTS',
-    title: 'Finding the signal.',
-    description: 'Retail analytics exploring chip purchase behavior, customer segments, and store-layout performance.',
-    detail: 'The analysis compares a trial store with a control store, explores seasonal sales patterns and customer segments, and considers how store layout can influence purchasing. The repository includes the transaction dataset, purchase-behavior data, and an analysis report.',
-    tags: ['Retail analytics', 'Customer segmentation', 'Trial vs. control'],
-    url: 'https://github.com/Piyush3355/Churn-analysis',
-    filter: 'data',
+  inbuildify: {
+    category: '02 / CONSTRUCTION SAAS',
+    title: 'Inbuildify — logic that holds up.',
+    description: 'Black-box testing of Lead Management, the Quotation Engine, and CRUD operations in a multi-tenant construction SaaS product.',
+    detail: 'Applied boundary value analysis and equivalence partitioning to validate business rules and module behavior. Root cause analysis of critical quotation-engine defects enabled developers to resolve billing accuracy issues 40% faster during sprint review cycles.',
+    tags: ['Black-box testing', 'Boundary value analysis', 'Equivalence partitioning', 'CRUD', 'Root cause analysis'],
+    url: 'mailto:piyushpatil.da@gmail.com?subject=Inbuildify%20QA%20case%20study',
+    linkLabel: 'Discuss this project',
+    filter: 'saas',
   },
-  robotics: {
-    category: '03 / WEB EXPERIENCES',
-    title: 'Made for curious minds.',
-    description: 'IDOSTEP Labs — an e-commerce website for school and college robotics kits.',
-    detail: 'A storefront built with HTML, CSS, and vanilla JavaScript for Arduino kits, RoboCars, drones, robot arms, and STEM parts. The project includes category filters, a Three.js hero, checkout, and responsive layouts.',
-    tags: ['HTML & CSS', 'JavaScript', 'Three.js', 'Responsive design'],
-    url: 'https://github.com/Piyush3355/IDOSTEM-ROBOTICS',
-    filter: 'web',
+  automation: {
+    category: '03 / AUTOMATION PRACTICE',
+    title: 'Repeat less. Test more.',
+    description: 'A hands-on Python and Playwright repository exploring repeatable browser automation and core test patterns.',
+    detail: 'Practice covers finding elements, click and fill interactions, waiting, assertions, multiple tests, Pytest organization, page object models, data-driven testing, and fixtures. This public learning repository is separate from client work and complements my experience automating login and regression flows.',
+    tags: ['Python', 'Playwright', 'Pytest', 'Page object model', 'Fixtures'],
+    url: 'https://github.com/Piyush3355/Playwright-Python-learn-For-Automation',
+    linkLabel: 'Explore repository',
+    filter: 'automation',
   },
 };
 

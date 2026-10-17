@@ -91,6 +91,9 @@ document.querySelectorAll('[data-project]').forEach(button => button.addEventLis
   element('#dialog-description').textContent = project.description;
   element('#dialog-detail').textContent = project.detail;
   element('#dialog-link').setAttribute('href', project.url);
+  element('#dialog-link-label').textContent = project.linkLabel;
+  if (project.url.startsWith('mailto:')) element('#dialog-link').removeAttribute('target');
+  else element('#dialog-link').setAttribute('target', '_blank');
   element('#dialog-tags').replaceChildren(...project.tags.map(tag => {
     const node = document.createElement('span'); node.textContent = tag; return node;
   }));
@@ -110,7 +113,7 @@ element('#copy-email').addEventListener('click', async () => {
   const status = element('#copy-status');
   window.clearTimeout(copyTimeout);
   try {
-    await navigator.clipboard.writeText('ppatil33555@gmail.com');
+    await navigator.clipboard.writeText('piyushpatil.da@gmail.com');
     status.textContent = 'Email copied.';
   } catch {
     status.textContent = 'Select the email to copy, or click it to write.';
