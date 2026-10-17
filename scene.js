@@ -14,12 +14,18 @@ export function createScene(container, initialPaused) {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(36, 1, .1, 50);
   camera.position.set(0, 0, 8.6);
-  const environment = new RoomEnvironment();
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  const environmentMap = pmrem.fromScene(environment, .04);
+  function createEnvironment() {
+    const environment = new RoomEnvironment();
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    try {
+      return pmrem.fromScene(environment, .04);
+    } finally {
+      environment.dispose();
+      pmrem.dispose();
+    }
+  }
+  let environmentMap = createEnvironment();
   scene.environment = environmentMap.texture;
-  environment.dispose();
-  pmrem.dispose();
 
   const sculpture = new THREE.Group();
   scene.add(sculpture);
@@ -112,6 +118,24 @@ export function createScene(container, initialPaused) {
     container.closest('.hero-art')?.classList.remove('scene-ready');
     renderer.domElement.style.display = 'none';
   }
+  function onContextRestored() {
+    try {
+      // Render-target contents do not survive a WebGL context loss.
+      environmentMap.dispose();
+      environmentMap = createEnvironment();
+      scene.environment = environmentMap.texture;
+      failed = false;
+      renderer.domElement.style.display = '';
+      resize();
+      container.closest('.hero-art')?.classList.add('scene-ready');
+      onScroll();
+    } catch {
+      failed = true;
+      stop();
+      container.closest('.hero-art')?.classList.remove('scene-ready');
+      renderer.domElement.style.display = 'none';
+    }
+  }
   const resizeObserver = new ResizeObserver(resize);
   resizeObserver.observe(container);
   const visibilityObserver = new IntersectionObserver(entries => {
@@ -123,6 +147,7 @@ export function createScene(container, initialPaused) {
   container.addEventListener('pointermove', onPointer);
   document.addEventListener('visibilitychange', onVisibility);
   renderer.domElement.addEventListener('webglcontextlost', onContextLost);
+  renderer.domElement.addEventListener('webglcontextrestored', onContextRestored);
   resize();
   onScroll();
   container.closest('.hero-art')?.classList.add('scene-ready');
@@ -138,6 +163,7 @@ export function createScene(container, initialPaused) {
       container.removeEventListener('pointermove', onPointer);
       document.removeEventListener('visibilitychange', onVisibility);
       renderer.domElement.removeEventListener('webglcontextlost', onContextLost);
+      renderer.domElement.removeEventListener('webglcontextrestored', onContextRestored);
       scene.traverse(object => {
         if (object instanceof THREE.Mesh) {
           object.geometry.dispose();
