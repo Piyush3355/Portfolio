@@ -149,4 +149,4 @@ async function loadScene() {
   }
 }
 if ('requestIdleCallback' in window) window.requestIdleCallback(() => { void loadScene(); }, { timeout: 1000 });
-else window.setTimeout(() => { void loadScene(); }, 100);
+else globalThis.setTimeout(() => { void loadScene(); }, 100);
