@@ -1,209 +1,152 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // ======================
-    // Mobile Navigation
-    // ======================
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    
-    menuToggle.addEventListener('click', function() {
-        this.classList.toggle('active');
-        navLinks.classList.toggle('active');
-    });
-    
-    // Close mobile menu when clicking a link
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', function() {
-            menuToggle.classList.remove('active');
-            navLinks.classList.remove('active');
-        });
-    });
+import { projects, projectCount } from './projects.js';
+import { pageProgress } from './motion.js';
 
-    // ======================
-    // Header Scroll Effect
-    // ======================
-    const header = document.querySelector('header');
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    });
+document.documentElement.classList.add('js-ready');
 
-    // ======================
-    // Current Year in Footer
-    // ======================
-    document.getElementById('year').textContent = new Date().getFullYear();
+/** @template {HTMLElement} T @param {string} selector @returns {T} */
+function element(selector) {
+  const node = document.querySelector(selector);
+  if (!(node instanceof HTMLElement)) throw new Error(`Missing element: ${selector}`);
+  return /** @type {T} */ (node);
+}
 
-    // ======================
-    // Back to Top Button
-    // ======================
-    const backToTop = document.querySelector('.back-to-top');
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 300) {
-            backToTop.style.opacity = '1';
-            backToTop.style.visibility = 'visible';
-        } else {
-            backToTop.style.opacity = '0';
-            backToTop.style.visibility = 'hidden';
-        }
-    });
-    
-    backToTop.addEventListener('click', function(e) {
-        e.preventDefault();
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-
-    // ======================
-    // Contact Form Submission
-    // ======================
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-            
-            console.log({ name, email, subject, message });
-            alert('Thank you for your message! I will get back to you soon.');
-
-            // WhatsApp Integration
-            const whatsappNumber = '+917875417830'; // User's WhatsApp number
-            const whatsappMessage = `New message from your website:\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\nMessage: ${message}`;
-            const whatsappURL = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(whatsappMessage)}`;
-            window.location.href = whatsappURL;
-
-            contactForm.reset();
-        });
-    }
-
-
-    // ======================
-    // Typewriter Effect
-    // ======================
-    const taglines = [
-        "Transforming Data into Decisions",
-        "Uncovering Insights from Complex Data",
-        "Turning data into actionable insights"
-    ];
-    const typewriterElement = document.getElementById('typewriter-text');
-    
-    if (typewriterElement) {
-        let lineIndex = 0;
-        let isDeleting = false;
-        let charIndex = 0;
-        const typingSpeed = 100;
-        const deletingSpeed = 50;
-        const pauseBetweenLines = 1500;
-        const pauseBetweenTyping = 2000;
-
-        function typeWriter() {
-            const currentText = taglines[lineIndex];
-            
-            if (!isDeleting && charIndex < currentText.length) {
-                typewriterElement.textContent = currentText.substring(0, charIndex + 1);
-                charIndex++;
-                setTimeout(typeWriter, typingSpeed);
-            } 
-            else if (!isDeleting) {
-                isDeleting = true;
-                setTimeout(typeWriter, pauseBetweenLines);
-            }
-            else if (isDeleting && charIndex > 0) {
-                typewriterElement.textContent = currentText.substring(0, charIndex - 1);
-                charIndex--;
-                setTimeout(typeWriter, deletingSpeed);
-            }
-            else {
-                isDeleting = false;
-                lineIndex = (lineIndex + 1) % taglines.length;
-                setTimeout(typeWriter, pauseBetweenTyping);
-            }
-        }
-
-        // Start the animation
-        typeWriter();
-    }
-
-    // ======================
-    // Experience Title Typewriter Effect
-    // ======================
-    const experienceTitleElement = document.getElementById('experience-title');
-
-    if (experienceTitleElement) {
-        const experienceTitleText = "My Experience";
-        let experienceCharIndex = 0;
-        const experienceTypingSpeed = 100;
-
-        function experienceTypeWriter() {
-            if (experienceCharIndex < experienceTitleText.length) {
-                experienceTitleElement.textContent = experienceTitleText.substring(0, experienceCharIndex + 1);
-                experienceCharIndex++;
-                setTimeout(experienceTypeWriter, experienceTypingSpeed);
-            }
-        }
-
-        experienceTypeWriter();
-    }
-
-    // ======================
-    // Skill Bar Animations
-    // ======================
-    function animateSkillBars() {
-        document.querySelectorAll('.skill-progress').forEach(bar => {
-            const width = bar.style.width;
-            bar.style.width = '0';
-            setTimeout(() => {
-                bar.style.width = width;
-            }, 100);
-        });
-    }
-
-    // ======================
-    // Intersection Observer
-    // ======================
-    const observerOptions = {
-        threshold: 0.1
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                if (entry.target.id === 'skills') {
-                    animateSkillBars();
-                }
-                entry.target.classList.add('animated');
-            }
-        });
-    }, observerOptions);
-    
-    // Observe all sections
-    document.querySelectorAll('section').forEach(section => {
-        observer.observe(section);
-    });
-
-    // ======================
-    // Syntax Highlighting
-    // ======================
-    const code = document.querySelector('.javascript');
-    if (code) {
-        const codeText = code.textContent;
-        const keywords = ['const', 'let', 'var', 'function', 'return', 'true', 'false', 'if', 'else'];
-        const strings = /(["'])(?:(?=(\\?))\2.)*?\1/g;
-        
-        let highlightedCode = codeText;
-        
-        keywords.forEach(keyword => {
-            const regex = new RegExp(`\\b${keyword}\\b`, 'g');
-            highlightedCode = highlightedCode.replace(regex, `<span class="keyword">${keyword}</span>`);
-        });
-        
-        highlightedCode = highlightedCode.replace(strings, '<span class="string">$&</span>');
-        code.innerHTML = highlightedCode;
-    }
+const menu = element('.menu-toggle');
+const navigation = element('#navigation');
+/** @param {boolean} open */
+function setMenu(open) {
+  menu.setAttribute('aria-expanded', String(open));
+  menu.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+  navigation.classList.toggle('is-open', open);
+}
+menu.addEventListener('click', () => setMenu(menu.getAttribute('aria-expanded') !== 'true'));
+navigation.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false)));
+document.addEventListener('click', event => {
+  if (event.target instanceof Node && !navigation.contains(event.target) && !menu.contains(event.target)) setMenu(false);
 });
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && menu.getAttribute('aria-expanded') === 'true') { setMenu(false); menu.focus(); }
+});
+window.matchMedia('(min-width: 761px)').addEventListener('change', event => { if (event.matches) setMenu(false); });
+
+element('#year').textContent = String(new Date().getFullYear());
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); }
+  });
+}, { threshold: .08 });
+document.querySelectorAll('.reveal').forEach(node => revealObserver.observe(node));
+
+const progressBar = element('.scroll-progress');
+const steps = [...document.querySelectorAll('.approach-step')];
+const stepProgress = element('.step-progress span');
+const sections = [...document.querySelectorAll('main section[id]')];
+let scrollFrame = 0;
+function updateScroll() {
+  scrollFrame = 0;
+  progressBar.style.transform = `scaleX(${pageProgress(window.scrollY, window.innerHeight, document.documentElement.scrollHeight)})`;
+  let activeStep = 0;
+  steps.forEach((step, index) => { if (step.getBoundingClientRect().top < window.innerHeight * .65) activeStep = index; });
+  steps.forEach((step, index) => step.classList.toggle('is-active', index === activeStep));
+  stepProgress.style.width = `${((activeStep + 1) / steps.length) * 100}%`;
+  let current = '';
+  sections.forEach(section => { if (section.getBoundingClientRect().top < window.innerHeight * .4) current = section.id; });
+  navigation.querySelectorAll('a').forEach(link => {
+    const active = link.getAttribute('href') === `#${current}`;
+    link.classList.toggle('is-current', active);
+    if (active) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current');
+  });
+}
+function scheduleScroll() { if (!scrollFrame) scrollFrame = requestAnimationFrame(updateScroll); }
+window.addEventListener('scroll', scheduleScroll, { passive: true });
+window.addEventListener('resize', scheduleScroll, { passive: true });
+updateScroll();
+
+document.querySelectorAll('.filter').forEach(button => button.addEventListener('click', () => {
+  const filter = button.getAttribute('data-filter') || 'all';
+  document.querySelectorAll('.filter').forEach(item => {
+    item.classList.toggle('active', item === button);
+    item.setAttribute('aria-pressed', String(item === button));
+  });
+  document.querySelectorAll('.project-card').forEach(card => {
+    if (card instanceof HTMLElement) {
+      card.hidden = filter !== 'all' && card.dataset.category !== filter;
+      if (!card.hidden) card.classList.add('is-visible');
+    }
+  });
+  const count = projectCount(filter);
+  element('#filter-status').textContent = `Showing ${count} ${count === 1 ? 'project' : 'projects'}.`;
+  scheduleScroll();
+}));
+
+const dialog = /** @type {HTMLDialogElement} */ (element('#project-dialog'));
+let previousFocus = /** @type {HTMLElement | null} */ (null);
+document.querySelectorAll('[data-project]').forEach(button => button.addEventListener('click', event => {
+  const key = /** @type {keyof typeof projects} */ (button.getAttribute('data-project'));
+  const project = projects[key];
+  if (!project) return;
+  event.preventDefault();
+  previousFocus = button instanceof HTMLElement ? button : null;
+  element('#dialog-category').textContent = project.category;
+  element('#dialog-title').textContent = project.title;
+  element('#dialog-description').textContent = project.description;
+  element('#dialog-detail').textContent = project.detail;
+  element('#dialog-link').setAttribute('href', project.url);
+  element('#dialog-tags').replaceChildren(...project.tags.map(tag => {
+    const node = document.createElement('span'); node.textContent = tag; return node;
+  }));
+  document.body.classList.add('dialog-open');
+  dialog.showModal();
+}));
+element('.dialog-close').addEventListener('click', () => dialog.close());
+dialog.addEventListener('click', event => {
+  if (event.target !== dialog) return;
+  const bounds = dialog.getBoundingClientRect();
+  if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
+});
+dialog.addEventListener('close', () => { document.body.classList.remove('dialog-open'); previousFocus?.focus({ preventScroll: true }); });
+
+let copyTimeout = 0;
+element('#copy-email').addEventListener('click', async () => {
+  const status = element('#copy-status');
+  window.clearTimeout(copyTimeout);
+  try {
+    await navigator.clipboard.writeText('ppatil33555@gmail.com');
+    status.textContent = 'Email copied.';
+  } catch {
+    status.textContent = 'Select the email to copy, or click it to write.';
+  }
+  copyTimeout = window.setTimeout(() => { status.textContent = ''; }, 5000);
+});
+
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+let userMotion = /** @type {boolean | null} */ (null);
+try { const saved = localStorage.getItem('portfolio-motion'); if (saved !== null) userMotion = saved === 'paused'; } catch { /* Storage is optional. */ }
+let paused = userMotion ?? reducedMotion.matches;
+let sceneController = /** @type {ReturnType<typeof import('./scene.js').createScene> | undefined} */ (undefined);
+function updateMotion() {
+  document.documentElement.classList.toggle('motion-off', paused);
+  element('#motion-toggle').setAttribute('aria-pressed', String(paused));
+  element('#motion-toggle').setAttribute('aria-label', paused ? 'Enable animations' : 'Pause animations');
+  element('#motion-label').textContent = paused ? 'Motion off' : 'Motion on';
+  sceneController?.setPaused(paused);
+}
+element('#motion-toggle').addEventListener('click', () => {
+  paused = !paused; userMotion = paused;
+  try { localStorage.setItem('portfolio-motion', paused ? 'paused' : 'on'); } catch { /* Storage is optional. */ }
+  updateMotion();
+});
+reducedMotion.addEventListener('change', event => { if (userMotion === null) { paused = event.matches; updateMotion(); } });
+updateMotion();
+
+const sceneHost = element('#scene');
+async function loadScene() {
+  try {
+    const { createScene } = await import('./scene.js');
+    sceneController = createScene(sceneHost, paused);
+  } catch {
+    sceneHost.closest('.hero-art')?.classList.remove('scene-ready');
+    sceneHost.replaceChildren();
+  }
+}
+if ('requestIdleCallback' in window) window.requestIdleCallback(() => { void loadScene(); }, { timeout: 1000 });
+else window.setTimeout(() => { void loadScene(); }, 100);
