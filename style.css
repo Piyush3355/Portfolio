@@ -221,6 +221,11 @@ em { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; letter-sp
 
 @media (min-width: 1600px) { :root { --gutter: max(80px, calc((100vw - 1440px) / 2)); }.hero-content { height: 680px; }.hero-art { right: 0; width: 54%; } }
 @media (max-width: 1050px) { .navigation { gap: 22px; }.hero-content { min-height: 540px; }.hero h1 { font-size: 8.6vw; }.hero-copy { width: 68%; }.hero-art { width: 57%; right: -7%; }.project-visual { height: 310px; }.test-code { padding: 20px; }.chart-art { inset: 22% 12% 19%; }.chart-bars { height: 100px; }.about { gap: 7%; }.about-art { min-height: 440px; }.toolkit-row { grid-template-columns: .4fr 2fr 3fr; }.toolkit-row > div > span { padding: 8px 11px; font-size: 9px; }.robot-art { right: 9%; } }
+@media (min-width: 761px) and (max-width: 1050px) {
+  .hero-content { display: grid; height: auto; min-height: 0; }
+  .hero-copy { width: 100%; padding: 50px 0 0; }
+  .hero-art { position: relative; width: min(80%, 620px); height: 460px; top: auto; right: auto; justify-self: center; margin-top: 30px; }
+}
 @media (max-width: 760px) {
   html { scroll-padding-top: 24px; }.header { height: 76px; }.wordmark { font-size: 37px; }.header-contact { margin-left: auto; margin-right: 30px; gap: 15px; font-size: 11px; }.menu-toggle { display: flex; flex-direction: column; justify-content: center; gap: 5px; background: none; padding: 10px 0 10px 10px; }.menu-toggle > span { width: 22px; height: 1px; background: var(--paper); transition: transform .2s; }.menu-toggle[aria-expanded='true'] > span:first-child { transform: translateY(3px) rotate(45deg); }.menu-toggle[aria-expanded='true'] > span:last-child { transform: translateY(-3px) rotate(-45deg); }
   .navigation { display: none; position: absolute; top: 75px; left: 0; right: 0; padding: 28px var(--gutter); flex-direction: column; align-items: stretch; gap: 0; border-bottom: 1px solid #3b4631; background: var(--ink); }.navigation.is-open { display: flex; }.navigation a { display: block; font-size: 19px; padding: 16px 0; }.navigation .mobile-contact { display: block; color: var(--lime); }
